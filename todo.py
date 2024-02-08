@@ -6,12 +6,14 @@ def strike(text):
     for c in text:
         result = result + c + '\u0336'
     return result
+    
 
 class Todo:
-    def __init__(self, master, text):
+    def __init__(self, master, text, checked, id):
         self.master = master
         self.text = text
-        self.checked = tk.BooleanVar(value=False)
+        self.id = id
+        self.checked = tk.BooleanVar(value=checked)
 
         self.frame = tk.Frame(master)
         self.frame.pack(fill=tk.X)
@@ -35,3 +37,4 @@ class Todo:
 
     def delete(self):
         self.frame.destroy()
+
