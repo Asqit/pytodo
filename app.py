@@ -3,7 +3,6 @@ import tkinter.font as tkFont
 import scrollableContainer
 import todo
 
-
 class App:
     def __init__(self, root, connection):
         self.root = root
