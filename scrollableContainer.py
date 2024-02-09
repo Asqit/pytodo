@@ -38,16 +38,3 @@ class ScrollableContainer(ttk.Frame):
         if self.interior.winfo_reqwidth() != self.canvas.winfo_width():
             # Update the inner frame's width to fill the canvas.
             self.canvas.itemconfigure(self.interior_id, width=self.canvas.winfo_width())
-
-            
-
-class Window():
-    def __init__(self, master, *args, **kwargs):
-        self.frame = ScrollableContainer(master)
-        self.frame.pack(expand = True, fill = tk.BOTH)
-        self.label = ttk.Label(master, text="Shrink the window to activate the scrollbar.")
-        self.label.pack()
- 
-        for i in range(10):
-            ttk.Button(self.frame.interior, text=f"Button {i}").pack(padx=10, pady=5)
- 

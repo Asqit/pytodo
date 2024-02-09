@@ -54,7 +54,7 @@ class App:
         if value:
             self.cursor.execute("INSERT INTO todos (text, checked) VALUES (?, ?)", [value, False])
             self.con.commit()
-            last_id = self.todos[-1][0]
+            last_id = self.todos[-1][0] + 1 if self.todos else 0
 
             item = todo.Todo(self.todo_box.interior, value, False, last_id)
             self.input_box.delete(0, tk.END)
@@ -64,16 +64,19 @@ class App:
         result = []
 
         def delete_task(id):
-            self.cursor.execute("DELETE FROM todos WHERE id = ?", (id))
-            self.connection.commit()
+            self.cursor.execute("DELETE FROM todos WHERE id = ?", [id])
+            self.con.commit()
 
+        def strike_task(id, state):
+            self.cursor.execute("UPDATE todos SET checked = ? WHERE id = ?", [state, id])
+            self.con.commit()
 
         for row in self.cursor.execute("SELECT * FROM todos"):
             if row:
-                print(row)
                 id, text, checked = row[0], row[1], row[2]
                 item = todo.Todo(self.todo_box.interior, text, checked, id)    
                 item.delete_button.config(command=lambda id=id: delete_task(id))
+                item.checkbox.config(command=lambda id=id, ch=checked: strike_task(id, (not ch)))
                 result.append((id, item))
         
         return result    
